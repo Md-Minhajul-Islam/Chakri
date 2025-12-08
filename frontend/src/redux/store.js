@@ -21,12 +21,21 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authSlice,
   job: jobSlice,
   company: companySlice,
   application: applicationSlice,
 });
+
+const rootReducer =(state, action) => {
+  if (action.type === "auth/logout") {
+    storage.removeItem("persist:root");
+    state = undefined;
+  }
+  return appReducer(state, action);
+
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -39,4 +48,5 @@ const store = configureStore({
       },
     }),
 });
+export const persistor = persistStore(store);
 export default store;

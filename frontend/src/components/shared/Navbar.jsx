@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constants";
 import { setUser } from "@/redux/authSlice";
+import { persistor } from "@/redux/store";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
@@ -22,7 +23,8 @@ const Navbar = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-        dispatch(setUser(null));
+        dispatch({ type: "auth/logout" }); // clear redux store data
+        persistor.purge();
         navigate("/");
         toast.success(res.data.message);
       }
