@@ -85,9 +85,10 @@ export async function login(req, res, next) {
     res
       .status(200)
       .cookie("token", token, {
-        maxAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        sameSite: "strict",
+        secure: true, // must be true on HTTPS
+        sameSite: "none", // allow cross-origin
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
       })
       .json({
         message: `Welcome back ${user.fullname}`,
