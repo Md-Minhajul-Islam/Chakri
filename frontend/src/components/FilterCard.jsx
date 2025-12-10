@@ -22,6 +22,7 @@ const fitlerData = [
 ];
 
 const FilterCard = () => {
+  
   const [selectedValue, setSelectedValue] = useState("");
   const dispatch = useDispatch();
   const changeHandler = (value) => {

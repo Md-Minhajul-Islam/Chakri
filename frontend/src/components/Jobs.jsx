@@ -2,31 +2,21 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./shared/Navbar";
 import FilterCard from "./FilterCard";
 import Job from "./Job";
-import { useSelector } from "react-redux";
-import useGetAllJobs from "../hooks/useGetAllJobs";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { setSearchedQuery } from "../redux/jobSlice";
+import useGetFilteredJobs from "../hooks/useGetFilteredJobs";
 
 const Jobs = () => {
-  useGetAllJobs();
-  const { allJobs, searchedQuery } = useSelector((store) => store.job);
-  const [filterJobs, setFilterJobs] = useState(allJobs);
+  useGetFilteredJobs();
+  const { filteredJobs } = useSelector((store) => store.job);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (searchedQuery) {
-      const filteredJobs = allJobs.filter((job) => {
-        return (
-          job?.title?.toLowerCase().includes(searchedQuery?.toLowerCase()) ||
-          job?.description
-            ?.toLowerCase()
-            .includes(searchedQuery?.toLowerCase()) ||
-          job?.location?.toLowerCase().includes(searchedQuery?.toLowerCase())
-        );
-      });
-      setFilterJobs(filteredJobs);
-    } else {
-      setFilterJobs(allJobs);
-    }
-  }, [searchedQuery, allJobs]);
+    return () => {
+      dispatch(setSearchedQuery(""));
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -38,14 +28,14 @@ const Jobs = () => {
             <FilterCard />
           </div>
 
-          {allJobs?.length <= 0 ? (
+          {filteredJobs?.length <= 0 ? (
             <span className="text-gray-600 text-lg font-medium">
               No jobs found
             </span>
           ) : (
             <div className="flex-1 h-[85vh] overflow-y-auto pb-6 pr-2 custom-scrollbar">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {filterJobs?.map((job) => (
+                {filteredJobs?.map((job) => (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

@@ -57,18 +57,23 @@ export async function postJob(req, res, next) {
 // get job : student
 export async function getAllJobs(req, res, next) {
   try {
-    const keyword = req.query.keyword || "";
-    const query = {
-      $or: [
-        { title: { $regex: keyword, $options: "i" } },
-        { description: { $regex: keyword, $options: "i" } },
-      ],
-    };
+    const keyword = req.query.keyword?.toLowerCase();
+
+    let query = {};
+
+    if (keyword) {
+      query = {
+        $or: [
+          { title: { $regex: keyword, $options: "i" } },
+          { description: { $regex: keyword, $options: "i" } },
+          { location: { $regex: keyword, $options: "i" } },
+        ],
+      };
+    }
     const jobs = await Job.find(query)
-      .populate({
-        path: "company",
-      })
+      .populate("company")
       .sort({ createdAt: -1 });
+
     if (!jobs) {
       throw createError("Jobs not found.", 404);
     }
