@@ -14,7 +14,7 @@ import useGetCompanyById from "@/hooks/useGetCompanyById";
 
 const CompanySetup = () => {
   const params = useParams();
-  useGetCompanyById(params.id);
+  useGetCompanyById(params?.id);
 
   const [input, setInput] = useState({
     name: "",
@@ -70,11 +70,11 @@ const CompanySetup = () => {
 
   useEffect(() => {
     setInput({
-      name: singleCompany.name || "",
-      description: singleCompany.description || "",
-      website: singleCompany.website || "",
-      location: singleCompany.location || "",
-      file: singleCompany.file || null,
+      name: singleCompany?.name || "",
+      description: singleCompany?.description || "",
+      website: singleCompany?.website || "",
+      location: singleCompany?.location || "",
+      file: singleCompany?.file || null,
     });
   }, [singleCompany]);
 
@@ -83,23 +83,15 @@ const CompanySetup = () => {
       <Navbar />
       <div className="max-w-xl mx-auto px-4 my-10">
         <form onSubmit={submitHandler}>
-          <div className="flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-8">
-            <Button
-              onClick={() => navigate("/admin/companies")}
-              variant="outline"
-              className="flex items-center gap-2 text-gray-500 font-semibold w-full sm:w-auto justify-center"
-            >
-              <ArrowLeft />
-              <span>Back</span>
-            </Button>
-            <h1 className="font-bold text-xl text-center sm:text-left flex-1">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-4 sm:p-8">
+            <h1 className="font-bold text-xl text-center flex-1">
               Company Setup
             </h1>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <Label>Company Name</Label>
+              <Label className="mb-1.5">Company Name</Label>
               <Input
                 type="text"
                 name="name"
@@ -108,7 +100,7 @@ const CompanySetup = () => {
               />
             </div>
             <div>
-              <Label>Description</Label>
+              <Label className="mb-1.5">Description</Label>
               <Input
                 type="text"
                 name="description"
@@ -117,7 +109,7 @@ const CompanySetup = () => {
               />
             </div>
             <div>
-              <Label>Website</Label>
+              <Label className="mb-1.5">Website</Label>
               <Input
                 type="text"
                 name="website"
@@ -126,7 +118,7 @@ const CompanySetup = () => {
               />
             </div>
             <div>
-              <Label>Location</Label>
+              <Label className="mb-1.5">Location</Label>
               <Input
                 type="text"
                 name="location"
@@ -135,7 +127,7 @@ const CompanySetup = () => {
               />
             </div>
             <div className="sm:col-span-2">
-              <Label>Logo</Label>
+              <Label className="mb-1.5">Logo</Label>
               <Input
                 type="file"
                 accept="image/*"
