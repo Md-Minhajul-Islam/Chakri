@@ -8,7 +8,7 @@ const Footer = () => {
 
           <div className="text-center md:text-left">
             <h2 className="text-2xl font-extrabold tracking-tight">
-              Cha<span className="text-[#F83002]">kri</span>
+              Cha<span className="text-[#6A38C2]">kri</span>
             </h2>
             <p className="text-sm text-gray-500 mt-1">
               © 2025 Chakri. All rights reserved.

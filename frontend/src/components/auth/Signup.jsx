@@ -124,32 +124,43 @@ const Signup = () => {
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-            <RadioGroup className="flex items-center gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div className="flex items-center gap-6">
               {["student", "recruiter"].map((role) => (
-                <div key={role} className="flex items-center space-x-2">
-                  <Input
+                <label
+                  key={role}
+                  htmlFor={role}
+                  className="flex items-center gap-2 text-sm cursor-pointer"
+                >
+                  <input
                     type="radio"
+                    id={role}
                     name="role"
                     value={role}
                     checked={input.role === role}
                     onChange={changeEventHandler}
-                    id={role}
+                    className="accent-[#6A38C2]"
                   />
-                  <Label htmlFor={role}>
-                    {role.charAt(0).toUpperCase() + role.slice(1)}
-                  </Label>
-                </div>
+                  {role.charAt(0).toUpperCase() + role.slice(1)}
+                </label>
               ))}
-            </RadioGroup>
+            </div>
 
-            <div className="flex flex-col">
-              <Label>Profile Picture</Label>
-              <Input
+            <div className="flex gap-1.5">
+              <Label className="text-sm font-medium">Profile Picture</Label>
+              <label
+                htmlFor="profileUpload"
+                className="cursor-pointer rounded-md border px-3 py-2 text-sm
+                 text-gray-600 hover:bg-gray-50 w-fit"
+              >
+                {input?.file?.name?.slice(0, 10) || "Choose file" }
+              </label>
+              <input
+                id="profileUpload"
                 type="file"
                 accept="image/*"
                 onChange={changeFileHandler}
-                className="cursor-pointer"
+                className="hidden"
                 required
               />
             </div>
