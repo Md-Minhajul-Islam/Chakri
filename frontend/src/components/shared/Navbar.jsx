@@ -40,7 +40,7 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
       <nav className="mx-auto max-w-7xl h-16 px-4 flex items-center justify-between">
-        {/* Logo */}
+
         <Link to="/" className="text-xl font-bold tracking-tight">
           Cha<span className="text-[#6A38C2]">kri</span>
         </Link>
@@ -121,7 +121,7 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Mobile Button */}
+        {/* Mobile Toggle */}
         <button
           className="md:hidden"
           aria-label="Toggle menu"
@@ -151,26 +151,50 @@ const Navbar = () => {
             </ul>
 
             {!user ? (
-              <div className="space-y-2 flex flex-col justify-center text-center">
-                <Link to="/login">
-                  <Button variant="outline" className="w-full max-w-80">
+              <div className="space-y-2 flex flex-col items-center">
+                <Link to="/login" className="w-full max-w-xs">
+                  <Button variant="outline" className="w-full">
                     Login
                   </Button>
                 </Link>
-                <Link to="/signup">
-                  <Button className="w-full max-w-80 bg-[#6A38C2] text-white ">
+                <Link to="/signup" className="w-full max-w-xs">
+                  <Button className="w-full bg-[#6A38C2] text-white">
                     Signup
                   </Button>
                 </Link>
               </div>
             ) : (
-              <button
-                onClick={logoutHandler}
-                className="flex items-center gap-2 text-sm text-red-500"
-              >
-                <LogOut size={16} />
-                Logout
-              </button>
+              <div className="space-y-4 border-t pt-4">
+                <div className="flex items-center gap-3">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={user?.profile?.profilePhoto} />
+                  </Avatar>
+                  <div>
+                    <p className="text-sm font-semibold">{user?.fullname}</p>
+                    <p className="text-xs text-gray-500">
+                      {user?.profile?.bio}
+                    </p>
+                  </div>
+                </div>
+
+                {user?.role === "student" && (
+                  <Link
+                    to="/profile"
+                    className="flex items-center gap-2 text-sm hover:text-[#6A38C2]"
+                  >
+                    <User2 size={16} />
+                    View Profile
+                  </Link>
+                )}
+
+                <button
+                  onClick={logoutHandler}
+                  className="flex items-center gap-2 text-sm text-red-500"
+                >
+                  <LogOut size={16} />
+                  Logout
+                </button>
+              </div>
             )}
           </div>
         </div>
@@ -187,8 +211,8 @@ const MenuLink = ({ to, label }) => (
         `relative ${
           isActive ? "text-[#6A38C2] after:w-full" : "hover:text-[#6A38C2]"
         }
-        after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-[#6A38C2]
-        after:w-0 after:transition-all`
+        after:absolute after:left-0 after:-bottom-1 after:h-[2px]
+        after:bg-[#6A38C2] after:w-0 after:transition-all`
       }
     >
       {label}
