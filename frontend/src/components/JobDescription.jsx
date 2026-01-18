@@ -64,28 +64,27 @@ const JobDescription = () => {
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
       <div className="max-w-5xl mx-auto my-10 px-4">
-
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-lg shadow">
           <div>
-            <h1 className="text-2xl font-bold">{singleJob.title}</h1>
+            <h1 className="text-2xl font-bold">{singleJob?.title}</h1>
             <div className="flex flex-wrap gap-2 mt-3">
               <Badge
                 variant="secondary"
                 className="text-blue-700 font-semibold"
               >
-                {singleJob.position} Positions
+                {singleJob?.position} Positions
               </Badge>
               <Badge
                 variant="secondary"
                 className="text-[#F83002] font-semibold"
               >
-                {singleJob.jobType}
+                {singleJob?.jobType}
               </Badge>
               <Badge
                 variant="secondary"
                 className="text-[#7209b7] font-semibold"
               >
-                {singleJob.salary} LPA
+                {singleJob?.salary} LPA
               </Badge>
             </div>
           </div>
@@ -106,29 +105,46 @@ const JobDescription = () => {
           <h2 className="text-xl font-semibold mb-3 border-b pb-2">
             Job Description
           </h2>
-          <p className="text-gray-700 leading-relaxed">
-            {singleJob.description}
+
+          <p className="text-gray-700 leading-relaxed mb-4">
+            {singleJob?.description}
           </p>
+
+          <div>
+            <h3 className="font-medium mb-2">Skills Required</h3>
+
+            <div className="flex flex-wrap gap-2">
+              {singleJob?.requirements?.length > 0 ? (
+                singleJob.requirements.map((skill, index) => (
+                  <span className="text-sm " key={index} variant="secondary">
+                    {skill}
+                  </span>
+                ))
+              ) : (
+                <span className="text-gray-500">No skills listed</span>
+              )}
+            </div>
+          </div>
         </div>
 
         <div className="bg-white p-6 mt-6 rounded-lg shadow space-y-3">
           <h2 className="text-xl font-semibold mb-3 border-b pb-2">
             Job Details
           </h2>
-          <DetailRow label="Role" value={singleJob.title} />
-          <DetailRow label="Location" value={singleJob.location} />
+          <DetailRow label="Role" value={singleJob?.title} />
+          <DetailRow label="Location" value={singleJob?.location} />
           <DetailRow
             label="Experience"
-            value={`${singleJob.experienceLevel} yrs`}
+            value={`${singleJob?.experienceLevel} yrs`}
           />
-          <DetailRow label="Salary" value={`${singleJob.salary} LPA`} />
+          <DetailRow label="Salary" value={`${singleJob?.salary} LPA`} />
           <DetailRow
             label="Total Applicants"
-            value={singleJob.applications.length}
+            value={singleJob?.applications?.length}
           />
           <DetailRow
             label="Posted Date"
-            value={singleJob.createdAt.split("T")[0]}
+            value={singleJob?.createdAt?.split("T")[0]}
           />
         </div>
       </div>
